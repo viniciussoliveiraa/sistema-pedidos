@@ -1,0 +1,85 @@
+{
+  "info": {
+    "name": "API Pedido",
+    "_postman_id": "12345678-1234-1234-1234-123456789000",
+    "description": "Testes da API de Pedido com State e Strategy",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Criar Pedido",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"valor\": 200,\n  \"tipoFrete\": \"AEREO\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/pedidos",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["pedidos"]
+        }
+      }
+    },
+    {
+      "name": "Pagar Pedido",
+      "request": {
+        "method": "POST",
+        "url": {
+          "raw": "http://localhost:8080/pedidos/1/pagar",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["pedidos", "1", "pagar"]
+        }
+      }
+    },
+    {
+      "name": "Enviar Pedido",
+      "request": {
+        "method": "POST",
+        "url": {
+          "raw": "http://localhost:8080/pedidos/1/enviar",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["pedidos", "1", "enviar"]
+        }
+      }
+    },
+    {
+      "name": "Cancelar Pedido",
+      "request": {
+        "method": "POST",
+        "url": {
+          "raw": "http://localhost:8080/pedidos/1/cancelar",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["pedidos", "1", "cancelar"]
+        }
+      }
+    },
+    {
+      "name": "Calcular Frete",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8080/pedidos/1/frete",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["pedidos", "1", "frete"]
+        }
+      }
+    }
+  ]
+}
