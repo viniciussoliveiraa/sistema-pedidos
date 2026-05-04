@@ -1,61 +1,73 @@
 # 🛒 Sistema de Pedidos - E-commerce (Design Patterns)
 
-## 📌 Descrição do Projeto
+## 📌 Sobre o Projeto
 
-Este projeto foi desenvolvido com o objetivo de implementar um sistema de controle de pedidos de um e-commerce, aplicando conceitos de Programação Orientada a Objetos e padrões de projeto.
+Este projeto foi desenvolvido com o objetivo de simular o funcionamento de um sistema de pedidos de um e-commerce, aplicando na prática conceitos de Programação Orientada a Objetos e padrões de projeto.
 
-O sistema permite gerenciar o ciclo de vida de um pedido, respeitando regras de negócio relacionadas aos estados do pedido e ao cálculo de frete.
+A ideia principal foi construir um sistema simples, porém bem estruturado, capaz de controlar o fluxo de um pedido desde sua criação até sua finalização, respeitando regras reais de negócio e garantindo organização no código.
+
+Além disso, o projeto foi pensado para ser flexível e fácil de evoluir, permitindo a adição de novas funcionalidades sem a necessidade de alterar partes já existentes do sistema.
 
 ---
 
-## 🎯 Objetivo
+## 🎯 Objetivo do Trabalho
 
-Aplicar padrões de projeto para:
+O objetivo deste trabalho foi aplicar padrões de projeto para resolver problemas comuns no desenvolvimento de software, como:
 
-* Controlar os estados de um pedido
-* Calcular o frete de forma flexível
-* Garantir organização, reutilização e manutenção do código
+* Controle de estados de um objeto
+* Variação de comportamentos (cálculo de frete)
+* Redução de complexidade no código
+* Melhoria na organização e manutenção do sistema
 
 ---
 
 ## 🧠 Padrões de Projeto Utilizados
 
-### 🔹 State (Comportamental)
+### 🔹 State (Padrão Comportamental)
 
-O padrão **State** foi utilizado para controlar os estados do pedido.
+O padrão **State** foi utilizado para controlar o ciclo de vida do pedido.
 
-✔️ Permite que o objeto altere seu comportamento conforme seu estado interno muda.
+Na prática, isso significa que o pedido muda de comportamento dependendo do seu estado atual, sem precisar de várias estruturas condicionais (`if/else`).
 
 Estados implementados:
 
-* Aguardando Pagamento
-* Pago
-* Enviado
-* Cancelado
+* **Aguardando Pagamento**
+* **Pago**
+* **Enviado**
+* **Cancelado**
 
-✔️ Evita o uso de múltiplos `if/else`
-✔️ Facilita a manutenção e expansão do sistema
+Cada estado possui suas próprias regras, garantindo que apenas transições válidas sejam permitidas.
+
+📌 Exemplo:
+
+* Um pedido não pode ser enviado sem estar pago
+* Um pedido cancelado não pode voltar para outro estado
+
+Esse padrão torna o código mais organizado e evita erros de lógica.
 
 ---
 
-### 🔹 Strategy (Comportamental)
+### 🔹 Strategy (Padrão Comportamental)
 
-O padrão **Strategy** foi utilizado para o cálculo do frete.
+O padrão **Strategy** foi aplicado no cálculo do frete.
 
-✔️ Permite definir diferentes algoritmos de cálculo de frete de forma intercambiável.
+Ele permite que diferentes formas de cálculo sejam utilizadas sem alterar a estrutura principal do sistema.
 
 Estratégias implementadas:
 
-* Frete Terrestre → 5% do valor
-* Frete Aéreo → 10% do valor
+* **Frete Terrestre** → 5% do valor do pedido
+* **Frete Aéreo** → 10% do valor do pedido
 
-✔️ Facilita a adição de novos tipos de frete
+📌 Vantagem:
+Se no futuro surgir um novo tipo de frete (ex: marítimo), basta criar uma nova classe, sem modificar o código existente.
 
 ---
 
 ## ⚙️ Regras de Negócio
 
-* O pedido inicia com status **AGUARDANDO PAGAMENTO**
+O sistema segue as seguintes regras:
+
+* Todo pedido inicia como **AGUARDANDO PAGAMENTO**
 * Pode ser:
 
   * Pago
@@ -66,36 +78,40 @@ Estratégias implementadas:
   * Não pode ser pago novamente
 * Após enviado:
 
-  * Não pode mais ser alterado
+  * Não pode mais sofrer alterações
 * Pedido cancelado:
 
   * Não pode mudar de estado
+
+Essas regras foram implementadas utilizando o padrão **State**, garantindo consistência no sistema.
 
 ---
 
 ## 🏗️ Estrutura do Projeto
 
-```
+O projeto foi organizado em camadas para facilitar o entendimento e manutenção:
+
+```bash
 src/main/java/com/exemple/pedido
- ├── controller
- ├── model
- ├── service
- ├── repository
- ├── state
- └── strategy
+ ├── controller   → Responsável pelas APIs
+ ├── model        → Entidades do sistema
+ ├── service      → Regras de negócio
+ ├── repository   → Acesso ao banco de dados
+ ├── state        → Implementação dos estados do pedido
+ └── strategy     → Cálculo de frete
 ```
 
 ---
 
 ## 🧩 Diagrama de Classes
 
-O sistema foi modelado utilizando UML com:
+O sistema foi modelado utilizando UML, representando:
 
-* Classe Pedido como entidade principal
-* Interface EstadoPedido com implementações de estados
-* Interface FreteStrategy com implementações de frete
+* A classe **Pedido** como entidade principal
+* O padrão **State** para controle de status
+* O padrão **Strategy** para cálculo de frete
 
-(Adicionar aqui a imagem do diagrama UML)
+📌 *(Inserir aqui a imagem do diagrama UML gerado no Visual Paradigm)*
 
 ---
 
@@ -104,22 +120,23 @@ O sistema foi modelado utilizando UML com:
 * Java
 * Spring Boot
 * Spring Data JPA
-* H2 Database
+* Banco de dados H2
 * Maven
 * Postman
+* IntelliJ IDEA
 
 ---
 
-## ▶️ Como Executar
+## ▶️ Como Executar o Projeto
 
 1. Abrir o projeto no IntelliJ
-2. Executar a classe:
+2. Executar a classe principal:
 
-```
+```java
 PedidoApplication
 ```
 
-3. A aplicação irá rodar em:
+3. A aplicação será iniciada em:
 
 ```
 http://localhost:8080
@@ -131,7 +148,7 @@ http://localhost:8080
 
 ### 🔹 Criar Pedido
 
-```
+```http
 POST /pedidos
 ```
 
@@ -148,7 +165,7 @@ Body:
 
 ### 🔹 Pagar Pedido
 
-```
+```http
 POST /pedidos/{id}/pagar
 ```
 
@@ -156,7 +173,7 @@ POST /pedidos/{id}/pagar
 
 ### 🔹 Cancelar Pedido
 
-```
+```http
 POST /pedidos/{id}/cancelar
 ```
 
@@ -164,7 +181,7 @@ POST /pedidos/{id}/cancelar
 
 ### 🔹 Enviar Pedido
 
-```
+```http
 POST /pedidos/{id}/enviar
 ```
 
@@ -172,39 +189,47 @@ POST /pedidos/{id}/enviar
 
 ### 🔹 Calcular Frete
 
-```
+```http
 GET /pedidos/{id}/frete
 ```
 
 ---
 
-## 🧪 Testes
+## 🧪 Testes da Aplicação
 
-Os testes foram realizados utilizando o Postman, garantindo:
+Os testes foram realizados utilizando o Postman, permitindo validar:
 
 * Criação de pedidos
-* Transição de estados
-* Validação das regras de negócio
+* Mudança de estados
+* Restrições de regras de negócio
 * Cálculo correto do frete
+
+Durante os testes, foi possível observar que o sistema bloqueia ações inválidas, como tentar enviar um pedido não pago ou alterar um pedido cancelado.
 
 ---
 
-## 💾 Persistência
+## 💾 Persistência de Dados
 
-Os dados são persistidos utilizando banco em memória **H2**, permitindo testes rápidos e simples.
+Foi utilizado o banco de dados em memória **H2**, que permite:
+
+* Execução rápida
+* Testes simples
+* Sem necessidade de instalação externa
 
 ---
 
 ## 📌 Considerações Finais
 
-O uso dos padrões **State** e **Strategy** proporcionou:
+A aplicação dos padrões **State** e **Strategy** foi essencial para resolver os problemas propostos de forma organizada e escalável.
 
-✔️ Código mais organizado
+O sistema desenvolvido apresenta:
+
+✔️ Código limpo e bem estruturado
 ✔️ Facilidade de manutenção
-✔️ Maior escalabilidade
-✔️ Melhor separação de responsabilidades
+✔️ Possibilidade de expansão
+✔️ Separação clara de responsabilidades
 
-O sistema atende completamente aos requisitos propostos, aplicando boas práticas de desenvolvimento orientado a objetos.
+Esse projeto demonstra, na prática, como o uso de padrões de projeto pode melhorar significativamente a qualidade de um software.
 
 ---
 
